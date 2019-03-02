@@ -1,30 +1,43 @@
 # python3
 
-import sys, threading
-sys.setrecursionlimit(10**7) # max depth of recursion
+import sys
+import threading
+sys.setrecursionlimit(10**7)  # max depth of recursion
 threading.stack_size(2**27)  # new thread will get stack of such size
 
+
 class TreeHeight:
+    def __init__(self):
+        self.n = 0
+        self.parent = []
+        self.tree2 = []
+        self.depth = []
+        self.root = None
+
     def read(self):
         self.n = int(sys.stdin.readline())
         self.parent = list(map(int, sys.stdin.readline().split()))
+        self.tree2 = [[] for i in range(self.n)]
 
-    def compute_height(self):
-        # Replace this code with a faster implementation
-        maxHeight = 0
-        for vertex in range(self.n):
-            height = 0
-            i = vertex
-            while i != -1:
-                height += 1
-                i = self.parent[i]
-            maxHeight = max(maxHeight, height)
-        return maxHeight
+        for i, j in enumerate(self.parent, 0):
+            if j != -1:
+                self.tree2[j].append(i)
+            else:
+                self.root = self.tree2[i]
+
+    def compute_fast(self, node, n):
+        if not node:
+            self.depth.append(n)
+            return n
+        for i in node:
+            self.compute_fast(self.tree2[i], n+1)
+
 
 def main():
     tree = TreeHeight()
     tree.read()
-    print(tree.compute_height())
-    threading.Thread(target=main).start()
+    tree.compute_fast(tree.root, 1)
+    print(max(tree.depth))
 
-main()
+
+threading.Thread(target=main).start()
