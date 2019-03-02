@@ -31,7 +31,7 @@ class Buffer:
         elif self.finish_time_:  # if the buffer is still not empty
             self.finish_time_.append(self.finish_time_[-1] + request.process_time)
             return Response(False, self.finish_time_[-2])
-`
+
 
 def ReadRequests(count):
     requests = []
