@@ -29,6 +29,7 @@ class JobQueue:
         self.assign_jobs()
         self.write_response()
 
+
 if __name__ == '__main__':
     job_queue = JobQueue()
     job_queue.solve()
