@@ -1,28 +1,33 @@
 # python3
+import heapq
+import copy
+
 
 class JobQueue:
+    def __init__(self):
+        self.num_workers = None
+        self.jobs = None
+        self.assigned = None  # assigned worker, start time
+        self.assigned_workers = None
+
     def read_data(self):
         self.num_workers, m = map(int, input().split())
         self.jobs = list(map(int, input().split()))
+        self.assigned_workers = [[0, i] for i in range(self.num_workers)]
+        self.assigned = []
         assert m == len(self.jobs)
 
     def write_response(self):
-        for i in range(len(self.jobs)):
-          print(self.assigned_workers[i], self.start_times[i]) 
+        for i in self.assigned:
+            print(i[1], i[0])
 
     def assign_jobs(self):
-        # TODO: replace this code with a faster algorithm.
-        self.assigned_workers = [None] * len(self.jobs)
-        self.start_times = [None] * len(self.jobs)
-        next_free_time = [0] * self.num_workers
-        for i in range(len(self.jobs)):
-          next_worker = 0
-          for j in range(self.num_workers):
-            if next_free_time[j] < next_free_time[next_worker]:
-              next_worker = j
-          self.assigned_workers[i] = next_worker
-          self.start_times[i] = next_free_time[next_worker]
-          next_free_time[next_worker] += self.jobs[i]
+        heapq.heapify(self.assigned_workers)
+        for i in self.jobs:
+            a = heapq.heappop(self.assigned_workers)
+            self.assigned.append(copy.deepcopy(a))
+            a[0] += i
+            heapq.heappush(self.assigned_workers, a)
 
     def solve(self):
         self.read_data()
@@ -33,4 +38,3 @@ class JobQueue:
 if __name__ == '__main__':
     job_queue = JobQueue()
     job_queue.solve()
-
