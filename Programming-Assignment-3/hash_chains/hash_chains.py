@@ -1,5 +1,6 @@
 # python3
 
+
 class Query:
 
     def __init__(self, query):
@@ -57,6 +58,7 @@ class QueryProcessor:
         n = int(input())
         for i in range(n):
             self.process_query(self.read_query())
+
 
 if __name__ == '__main__':
     bucket_count = int(input())
