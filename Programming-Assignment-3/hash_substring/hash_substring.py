@@ -10,22 +10,22 @@ def print_occurrences(output):
 
 
 def get_occurrences(pattern, text):
-    hashes, patt, total, index, compare, sol = [], 0, 0, len(pattern), 0, []
+    hashes, pattern_hash, index, hash_compare, results = [], 0, len(pattern), 0, []
     for i in text:
         hashes.append(hash(i))
     for i in range(index):
-        patt = patt + hash(pattern[i])
-        compare = compare + hash(text[i])
+        pattern_hash += hash(pattern[i])
+        hash_compare += hash(text[i])
     for i in range(len(text)-index+1):
-        if compare == patt:
+        if hash_compare == pattern_hash:
             if text[i:i+index] == pattern:
-                sol.append(i)
+                results.append(i)
         try:
-            compare = compare + hashes[i + index]
-            compare = compare - hashes[i]
+            hash_compare += hashes[i + index]
+            hash_compare -= hashes[i]
         except IndexError:
             break
-    return sol
+    return results
 
 
 if __name__ == '__main__':
