@@ -2,7 +2,7 @@
 
 
 def read_input():
-    return (input().rstrip(), input().rstrip())
+    return input().rstrip(), input().rstrip()
 
 
 def print_occurrences(output):
@@ -10,13 +10,18 @@ def print_occurrences(output):
 
 
 def get_occurrences(pattern, text):
-    return [
-        i 
-        for i in range(len(text) - len(pattern) + 1) 
-        if text[i:i + len(pattern)] == pattern
-    ]
+    hashes, patt, total, index, compare, sol = [], 0, 0, len(pattern), 0, []
+    for i in text:
+        hashes.append(hash(i) % 201251)
+    for i in range(index):
+        patt = (patt + hash(pattern[i])) % 201251
+        compare = (compare + hash(text[i])) % 201251
+    for i in range(len(text)-index):
+        if compare == patt:
+            if text[i:i+index] == pattern:
+                sol.append(i)
+        compare += hashes[i + index + 1]
 
 
-if __name__ == '__main__':
+    if __name__ == '__main__':
     print_occurrences(get_occurrences(*read_input()))
-
