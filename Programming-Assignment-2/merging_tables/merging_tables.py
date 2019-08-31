@@ -24,6 +24,7 @@ def getParent(table):
 
 def merge(destination, source):
     global parent, lines, rank, ans
+
     realDestination, realSource = getParent(destination), getParent(source)
 
     if realDestination == realSource:

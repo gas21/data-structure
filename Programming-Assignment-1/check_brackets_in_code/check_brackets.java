@@ -18,7 +18,6 @@ class Bracket {
             return true;
         return false;
     }
-
     char type;
     int position;
 }

@@ -12,10 +12,10 @@ def are_matching(left, right):
 def find_mismatch(text):
     opening_brackets_stack = []
     for i, next in enumerate(text):
-        if next in "([{":
+        if next in {"(", "[", "{"}:
             opening_brackets_stack.append((next, i))
 
-        if next in ")]}":
+        if next in {")", "]", "}"}:
             opened = opening_brackets_stack.pop()
             if not are_matching(opened[0], next):
                 print(i+1)

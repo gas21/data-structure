@@ -39,7 +39,7 @@ class QueryProcessor:
         if query.type == "check":
             # use reverse order, because we append strings to the end
             self.write_chain(cur for cur in reversed(self.elems)
-                        if self._hash_func(cur) == query.ind)
+                            if self._hash_func(cur) == query.ind)
         else:
             try:
                 ind = self.elems.index(query.s)
